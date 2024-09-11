@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="./main.css">
+
+    <style>
+        :root {
+            --dk-violet: hsl(268, 75%, 9%);
+            --lt-violet: hsl(268, 47%, 21%);
+            --lt-violet2: hsl(281, 89%, 26%);
+            --vb-violet: hsl(285, 91%, 52%);
+            --vb-violet2: hsl(290, 70%, 36%);
+            --vb-yellow: hsl(52, 100%, 62%);
+            --pl-white: hsl(0, 0%, 100%);
+            --vb-cyan: hsl(176, 100%, 44%);
+            --vb-cyan2: hsl(177, 92%, 70%);
+            --dk-text: hsl(198, 20%, 13%);
+        }
+
+        .wrapper{
+            background: linear-gradient(231deg, rgba(22, 6, 40, 1) 0%, rgba(52, 28, 79, 1) 50%, rgba(88, 7, 125, 1) 100%);
+        }
+
+        .check input:checked{
+            background-color: var(--vb-cyan);
+        }
+
+        .check input:checked:before{
+            content: '✔';
+            position: absolute;
+            color: var(--dk-text);
+            font-size:0.8rem;
+            font-weight: 600;
+            left:50%;
+            top:-3.4px;
+            transform: translateX(-50%)  translateY(18%);
+        }
+
+        .slider{
+            background-color: var(--lt-violet);
+            background-image: linear-gradient(var(--vb-violet), var(--vb-violet));
+            background-repeat: no-repeat;
+        }
+
+        .slider::-webkit-slider-thumb{
+            position: relative;
+            appearance: none;
+            height: 1.5rem;
+            width: 1.5rem;
+            border-radius: 50%;
+            background-color: var(--vb-yellow);
+            box-shadow: 0px 0px 20px 0px rgba(255, 229, 61, 0.50);
+            transition: all 100ms ease-in;
+        }
+
+        .slider:focus{
+            outline: 2px solid var(--vb-yellow);
+        }
+
+        .slider::-webkit-slider-thumb:hover{
+            background-color: var(--dk-violet);
+            outline: 2px solid var(--vb-yellow);
+            box-shadow: 0px 0px 25px 5px rgba(255, 229, 61, 0.80);
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper h-[100vh] w-[100vw] flex flex-col justify-center items-center space-y-4">
+        <h1 class="text-[--pl-white] font-semibold text-[1.5rem]">PASSWORD GENERATOR</h1>
+
+        <div class="relative flex justify-between items-center bg-[--dk-violet] rounded-[10px] px-4 py-3 gap-[1.2rem] border-b-[--vb-violet2] border-b-solid border-b-4">
+            <div>
+                <input readonly placeholder="PASSWORD" data-passwordDisplay class="bg-inherit text-[--vb-yellow] text-[1.25rem] font-semibold placeholder-current">
+            </div>
+
+            <button data-copyButton onclick="copyContent()" class="h-[1rem] w-[1rem]">
+                <span data-copyPassword class="absolute top-[0.8rem] right-[-6rem] text-[white] bg-[--vb-yellow] text-[1.2rem] font-semibold text-center px-2 pb-1 rounded-[30px] opacity-0"></span>
+                <img src="images/copy.svg" alt="">
+            </button>
+        </div>
+
+        <div class="w-[316px] flex flex-col bg-[--dk-violet] rounded-[10px] px-4 py-3 gap-3 border-b-[--vb-violet2] border-b-solid border-b-8">
+            <div class="flex justify-between items-center">
+                <p class="text-[white]">Password Length</p>
+                <p data-lengthDisplay class="text-[--vb-yellow] font-semibold">0</p>
+            </div>
+
+            <div>
+                <input type="range" min="1" max="20" step="1" data-lengthSlider class="slider appearance-none z-[1] w-full h-[0.75rem] outline-none  rounded-2xl">
+            </div>
+
+            <div class="flex flex-col">
+                <div class="check flex items-center gap-2">
+                    <input type="checkbox" id="uppercase" class="relative appearance-none h-[20px] w-[20px] border-solid border-[1px] border-[--vb-cyan] rounded-[0.35rem]">
+                    <label for="uppercase" class="text-[white]">Include Uppercase Letters</label>
+                </div>
+
+                <div class="check flex items-center gap-2">
+                    <input type="checkbox" id="lowercase" class="relative appearance-none h-[20px] w-[20px] border-solid border-[1px] border-[--vb-cyan] rounded-[0.35rem]">
+                    <label for="lowercase" class="text-[white]">Include Lowercase Letters</label>
+                </div>
+
+                <div class="check flex items-center gap-2">
+                    <input type="checkbox" id="number" class="relative appearance-none h-[20px] w-[20px] border-solid border-[1px] border-[--vb-cyan] rounded-[0.35rem]">
+                    <label for="number" class="text-[white]">Include Numbers</label>
+                </div>
+
+                <div class="check flex items-center gap-2">
+                    <input type="checkbox" id="symbol" class="relative appearance-none h-[20px] w-[20px] border-solid border-[1px] border-[--vb-cyan] rounded-[0.35rem]">
+                    <label for="symnol" class="text-[white]">Include Symbols</label>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <p class="text-white font-semibold text-[1rem]">Strength</p>
+                <div data-indicator class="h-[15px] w-[15px] rounded-[50%]"></div>
+            </div>
+
+            <button data-generateButton class="w-full text-[--vb-yellow] font-bold bg-[--vb-violet] my-2 py-2 rounded-[10px] border-b-solid border-b-[--vb-yellow] border-b-4">GENERATE PASSWORD</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
